@@ -9,7 +9,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ParseStarterProject_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Uber_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -157,7 +157,7 @@
         <!--Rider View Controller-->
         <scene sceneID="BII-TI-bXm">
             <objects>
-                <viewController storyboardIdentifier="s1" title="Rider View Controller" id="4NE-HH-V4k" customClass="RiderViewController" customModule="ParseStarterProject_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="s1" title="Rider View Controller" id="4NE-HH-V4k" customClass="RiderViewController" customModule="Uber_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vsj-fU-FwZ"/>
                         <viewControllerLayoutGuide type="bottom" id="vZl-2F-Ddu"/>
@@ -228,7 +228,7 @@
         <!--View Requests-->
         <scene sceneID="B4c-Or-dLg">
             <objects>
-                <viewController title="View Requests" id="pX2-7F-gC2" customClass="RequestViewController" customModule="ParseStarterProject_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="View Requests" id="pX2-7F-gC2" customClass="RequestViewController" customModule="Uber_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ckx-Zt-lX9"/>
                         <viewControllerLayoutGuide type="bottom" id="Bpa-aT-byt"/>
@@ -278,7 +278,7 @@
         <!--Driver View Controller-->
         <scene sceneID="Y6W-Vc-8BJ">
             <objects>
-                <tableViewController title="Driver View Controller" id="kOq-GO-qsG" customClass="DriverViewController" customModule="ParseStarterProject_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Driver View Controller" id="kOq-GO-qsG" customClass="DriverViewController" customModule="Uber_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="LUl-8T-uKl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
