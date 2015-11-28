@@ -18,29 +18,19 @@ class RequestViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        print(requestUsername)
-        print(requestLocation)
-        
-        
-        
         let region = MKCoordinateRegion(center: requestLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        
         self.map.setRegion(region, animated: true)
-        
         
         var objectAnnotation = MKPointAnnotation()
         objectAnnotation.coordinate = requestLocation
         objectAnnotation.title = requestUsername
         self.map.addAnnotation(objectAnnotation)
         
-        
     }
     
     @IBAction func pickUpRider(sender: AnyObject) {
         
-        var query = PFQuery(className:"riderRequest")
+        let query = PFQuery(className:"riderRequest")
         query.whereKey("username", equalTo:requestUsername)
         
         
@@ -48,22 +38,19 @@ class RequestViewController: UIViewController, CLLocationManagerDelegate {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
-                // The find succeeded.
-                
-                
                 
                 if let objects = objects as? [PFObject]! {
+                    
                     for object in objects {
                         
-                        
-                        
-                        
-                        
-                        var query = PFQuery(className:"riderRequest")
+                        let query = PFQuery(className:"riderRequest")
                         query.getObjectInBackgroundWithId(object.objectId!) {
                             (object: PFObject?, error: NSError?) -> Void in
+                            
                             if error != nil {
+                                
                                 print(error)
+                                
                             } else if let object = object {
                                 
                                 object["driverResponded"] = PFUser.currentUser()!.username!
@@ -82,37 +69,18 @@ class RequestViewController: UIViewController, CLLocationManagerDelegate {
                                             let pm = placemarks![0] as! CLPlacemark
                                             
                                             let mkPm = MKPlacemark(placemark: pm)
-                                            var mapItem = MKMapItem(placemark: mkPm)
+                                            let mapItem = MKMapItem(placemark: mkPm)
                                             mapItem.name = self.requestUsername
-                                            var launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
+                                            let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
                                             mapItem.openInMapsWithLaunchOptions(launchOptions)
                                             
                                         } else {
                                             print("Problem with the data received from geocoder")
                                         }
-                                        
                                     }
-                                    
-                                    
-                                    
                                 })
-                                
-                                
-                                
-         
-                                
-                                
-                                
-                                //                                do {
-                                //
-                                //                                    try object.save()
-                                //                                } catch {
-                                //                                    print("ooops")
-                                //                                }
                             }
                         }
-                        
-                        
                     }
                 }
             } else {

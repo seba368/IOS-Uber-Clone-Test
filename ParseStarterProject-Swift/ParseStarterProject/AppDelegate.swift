@@ -38,8 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Uncomment and fill in with your Parse credentials:
         // Parse.setApplicationId("your_application_id", clientKey: "your_client_key")
         
-        Parse.setApplicationId("vqQeb1mFPwuUBLjBlSj44oSnG2LrleDyH1cKXrzt",
-            clientKey: "eAG23RJHP9bla7Dck0m8UR0A3gdMbA6kGqV18J8E")
+        
+        Parse.setApplicationId("pwB61ahg5N8Sm6vCpOq0oIEa1lFipPlbckRjdz5j",
+            clientKey: "ecyMGanF3Cxnjc8AACA3gUg15GqfMFgkPsCJMLql")
 
         
         //

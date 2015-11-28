@@ -25,9 +25,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func displayAlert(title: String, message: String){
         
-        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+        //let alertController: UIAlertController =
+       // UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        
+        
     }
     
     @IBAction func toggleSignUp(sender: AnyObject) {
@@ -48,11 +54,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             riderLabel.alpha = 1
             driverLabel.alpha = 1
             `switch`.alpha = 1
-            
         }
-        
     }
-    
     
     @IBAction func SignUpButton(sender: AnyObject) {
         
@@ -66,8 +69,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 user.username = username.text
                 user.password = password.text
                 user["isDriver"] = `switch`.on
-                
-                
                 
                 user.signUpInBackgroundWithBlock {
                     (succeeded, error) -> Void in
@@ -120,6 +121,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
@@ -144,6 +146,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        displayAlert("Please replace key inside AppDelegate.swift", message: "Please visit http://parse.com, create an account, go to AppDelegate.swift and replace Parse.setApplicationId(\"your key\", clientKey:\"your key\" with your own key. Thanks!")
+
         
         if PFUser.currentUser()?.username != nil {
          

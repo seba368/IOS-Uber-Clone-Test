@@ -21,31 +21,22 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
     var longitude: CLLocationDegrees = 0
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        super.viewDidLoad()        
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
-        // locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        
-        
-        
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        var location:CLLocationCoordinate2D = manager.location!.coordinate
+        let location:CLLocationCoordinate2D = manager.location!.coordinate
         print("locations = \(location.latitude) \(location.longitude)")
-        
         
         self.latitude = location.latitude
         self.longitude = location.longitude
-        
-        
-        
         
         var query = PFQuery(className:"driverLocation")
         query.whereKey("username", equalTo:PFUser.currentUser()!.username!)
@@ -56,7 +47,7 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
             
             if error == nil {
                 
-                if let objects = objects as? [PFObject]! {
+                if var objects = objects as? [PFObject]! {
                     
                     if objects.count > 0 {
                         
@@ -74,8 +65,7 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
                                     object.saveInBackground()
                                     
                                 }
-                            }
-                            
+                            }                            
                             
                         }
                     }
@@ -86,7 +76,6 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
                         driverLocation["username"] = PFUser.currentUser()?.username
                         driverLocation["driverLocation"] = PFGeoPoint(latitude: location.latitude, longitude: location.longitude)
                         driverLocation.saveInBackground()
-                        
                         
                     }
                 } else {
@@ -127,19 +116,14 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
                                 let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
                                 let driverCLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
                                 let distance = driverCLLocation.distanceFromLocation(requestCLLocation)
-                                
                                 self.distances.append(distance/1000)
-                                
                                 
                             }
                             
-                            //
                         }
                     }
                     
                     self.tableView.reloadData()
-                    //    print(self.locations)
-                    //   print(self.usernames)
                 }
             } else {
                 // Log details of the failure
@@ -168,9 +152,8 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        
-        
         var distanceDouble = Double(distances[indexPath.row])
         var roundedDistance = Double(round(distanceDouble * 10) / 10)
         cell.textLabel?.text = usernames[indexPath.row] + " - " + String(roundedDistance) + "km away"
@@ -178,6 +161,23 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
         return cell
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "logoutDriver" {
+            
+            navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
+            PFUser.logOut()
+            
+        } else if segue.identifier == "showViewRequests" {
+            
+            if let destination = segue.destinationViewController as? RequestViewController {
+                
+                destination.requestLocation = locations[(tableView.indexPathForSelectedRow?.row)!]
+                destination.requestUsername = usernames[(tableView.indexPathForSelectedRow?.row)!]
+            }
+        }
+    }
     
     /*
     // Override to support conditional editing of the table view.
@@ -224,23 +224,4 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate {
     }
     */
     
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        
-        if segue.identifier == "logoutDriver" {
-            navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true) //or animated: false
-            
-            PFUser.logOut()
-            
-            
-        } else if segue.identifier == "showViewRequests" {
-            
-            if let destination = segue.destinationViewController as? RequestViewController {
-                
-                destination.requestLocation = locations[(tableView.indexPathForSelectedRow?.row)!]
-                destination.requestUsername = usernames[(tableView.indexPathForSelectedRow?.row)!]
-            }
-        }
-    }
-}
+   }

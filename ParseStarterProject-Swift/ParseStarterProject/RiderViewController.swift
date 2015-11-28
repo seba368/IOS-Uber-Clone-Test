@@ -24,11 +24,9 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     @IBOutlet var callUberButton: UIButton!
     @IBAction func callUber(sender: AnyObject) {
         
-        
         if riderRequestActive == false {
             
-            
-            var riderRequest = PFObject(className:"riderRequest")
+            let riderRequest = PFObject(className:"riderRequest")
             riderRequest["username"] = PFUser.currentUser()?.username
             riderRequest["location"] = PFGeoPoint(latitude: latitude, longitude: longitude)
             
@@ -38,10 +36,9 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                     
                     self.callUberButton.setTitle("Cancel Uber", forState: UIControlState.Normal)
                     
-                    
                 } else {
                     
-                    var alert = UIAlertController(title: "Could not call Uber", message: "Please try again", preferredStyle: UIAlertControllerStyle.Alert)
+                    let alert = UIAlertController(title: "Could not call Uber", message: "Please try again", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
                     
@@ -55,7 +52,7 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             self.callUberButton.setTitle("Call Uber", forState: UIControlState.Normal)
             
             riderRequestActive = false
-            var query = PFQuery(className:"riderRequest")
+            let query = PFQuery(className:"riderRequest")
             query.whereKey("username", equalTo:PFUser.currentUser()!.username!)
             query.findObjectsInBackgroundWithBlock {
                 (objects: [PFObject]?, error: NSError?) -> Void in
@@ -75,11 +72,7 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                     print(error)
                 }
             }
-            
         }
-        
-        
-        
     }
     
     override func viewDidLoad() {
@@ -88,15 +81,12 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        //  locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         var location:CLLocationCoordinate2D = manager.location!.coordinate
-        // print("locations = \(location.latitude) \(location.longitude)")
-        
         self.latitude = location.latitude
         self.longitude = location.longitude
         
@@ -143,8 +133,6 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                                                 
                                                 
                                                 self.callUberButton.setTitle("Driver is \(roundedTwoDigitDistance) km away!", forState: UIControlState.Normal)
-                                                
-                                                
                                                 self.driverOnTheWay = true
                                                 
                                                 let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
@@ -153,10 +141,6 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                                                 
                                                 
                                                 let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta))
-                                                
-                                                
-                                                
-                                                
                                                 self.map.setRegion(region, animated: true)
                                                 self.map.removeAnnotations(self.map.annotations)
                                                 var pinLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.latitude, location.longitude)
@@ -165,13 +149,11 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                                                 objectAnnotation.title = "Your location"
                                                 self.map.addAnnotation(objectAnnotation)
                                                 
-                                                
                                                 pinLocation = CLLocationCoordinate2DMake(driverLocation.latitude, driverLocation.longitude)
                                                 objectAnnotation = MKPointAnnotation()
                                                 objectAnnotation.coordinate = pinLocation
                                                 objectAnnotation.title = "Driver location"
                                                 self.map.addAnnotation(objectAnnotation)
-
                                                 
                                             }
                                         }
@@ -196,18 +178,11 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             objectAnnotation.coordinate = pinLocation
             objectAnnotation.title = "Your location"
             self.map.addAnnotation(objectAnnotation)
-           
+            
         }
         
     }
     
-    //    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-    //
-    //        var locValue:CLLocationCoordinate2D = manager.location.coordinate
-    //
-    //        print("locations = \(locValue.latitude) \(locValue.longitude)")
-    //
-    //    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
